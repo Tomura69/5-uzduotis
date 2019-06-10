@@ -1,0 +1,44 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Text files
+*.txt
+test10.md
+test100.md
+test1000.md
+test10000.md
+test100000.md
+Vargsiukai.md
+Saunuoliai.md
+
+# Executables
+*.exe
+*.out
+*.app
+test
+.vscode
