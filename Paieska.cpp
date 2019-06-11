@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <fstream>
 #include <regex>
+#include <set>
+#include <functional>
 
 using std::cout;
 using std::endl;
@@ -39,8 +41,55 @@ int main () {
             }
             ++nr;
         }
+
+        typedef std::pair<std::string,int> pair;
+       // create a empty vector of pairs
+        std::vector<pair> vec;
+
+        // copy key-value pairs from the map to the vector
+        std::copy(zodziai.begin(),
+                zodziai.end(),
+                std::back_inserter<std::vector<pair>>(vec));
+
+        // sort the vector by increasing order of its pair's second value
+        // if second value are equal, order by the pair's first value
+        std::sort(vec.begin(), vec.end(),
+                [](const pair& l, const pair& r) {
+                    if (l.second != r.second)
+                        return l.second < r.second;
+
+                    return l.first < r.first;
+                });
+
         int sum = 0;
-        for(std::map<std::string, int>::iterator it = zodziai.begin(); it != zodziai.end(); ++it){
+        for (auto const &pair: vec) {
+            int kiek = 0;
+            int skirtukas = 5;
+            if (pair.second > 1){
+                cout << pair.first << " - pasikartoja " << pair.second << " kartu eilutese:" << endl;
+                for (std::map<std::string, std::vector<int>>::iterator wit = vieta.begin(); wit != vieta.end(); ++wit){
+                    if (pair.first == wit->first){
+                        int tarp = 1;
+                        for (int i = 0; i < wit->second.size(); ++i){
+                            if (wit->second[i] == wit->second[i+1]){
+                            }
+                            else{
+                                cout << wit->second[i] << " ";
+                                 if (tarp % skirtukas == 0 && skirtukas != wit->second.size())
+                                    cout << endl;
+                                    tarp++;
+                            }  
+                        }
+                    }
+                }
+                cout << endl;
+                kiek++;
+            }
+            sum = sum + kiek;
+        }
+        cout << endl;
+        if (sum == 0) cout << "Besikartojanciu zodziu nera" << endl;
+        /*for(std::map<std::string, int>::iterator it = zodziai.begin(); it != zodziai.end(); ++it){
             int kiek = 0;
             if (it->second > 1){
                 cout << it->first << " - pasikartoja " << it->second << " kartu eilutese:" << endl;
@@ -57,7 +106,7 @@ int main () {
             sum = sum + kiek;
         }
         cout << endl;
-        if (sum == 0) cout << "Besikartojanciu zodziu nera" << endl;
+        if (sum == 0) cout << "Besikartojanciu zodziu nera" << endl;*/
         for (std::map<int, std::string>::iterator it = site.begin(); it != site.end(); ++it){
             cout << "Tinklapis: " << it->second << " yra " << it->first << " eiluteje" << endl;
         }
